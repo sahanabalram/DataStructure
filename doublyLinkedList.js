@@ -13,7 +13,7 @@ let Node = function (value) {
     this.previous = null;
 }
 
-DoublyLinkedList.prototype.printAll = function() {
+DoublyLinkedList.prototype.printAll = function () {
     console.log(this);
 }
 DoublyLinkedList.prototype.print = function () {
@@ -36,7 +36,24 @@ DoublyLinkedList.prototype.insertFront = function (value) {
     }
     this.length++;
 };
-
+DoublyLinkedList.prototype.insertFirst = function(value) {
+    let currentNode = this.head;
+    while(currentNode) {
+        if(currentNode.value === value) {
+            let node = new Node(value);
+            if(currentNode === this.tail) {
+                this.add(value);
+            } else {
+                currentNode.next.previous = node;
+                node.previous = currentNode;
+                node.next = currentNode.next;
+                currentNode.next = node;
+            }
+            this.length++;
+        }
+        currentNode = currentNode.next;
+    }
+};
 DoublyLinkedList.prototype.delete = function (value) {
     let currentNode = this.head;
     while (currentNode) {
@@ -64,6 +81,8 @@ head.insertFront(20);
 head.insertFront(21);
 head.insertFront(22);
 head.insertFront(16);
+head.insertFirst(8);
+head.insertFirst(10);
 head.print();
 head.delete(20);
 head.print();
